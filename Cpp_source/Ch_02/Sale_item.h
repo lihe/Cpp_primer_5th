@@ -81,6 +81,7 @@ private:
 #endif
 };
 
+
 // used in chapter 10
 inline
 bool compareIsbn(const Sales_item &lhs, const Sales_item &rhs)
