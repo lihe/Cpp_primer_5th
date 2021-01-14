@@ -81,3 +81,53 @@ void q_1_16(){
         sum += value;
     std::cout << sum << std::endl;
 }
+
+void q_1_20(){
+    for(Sales_item item; std::cin >> item; std::cout << item << std::endl);
+}
+
+void q_1_21(){
+    Sales_item item1;
+    Sales_item item2;
+    std::cin >> item1;
+    std::cout << item1;
+    std::cin >> item2;
+    std::cout << item2;
+    std::cout << "Sum of sale items: " << item1 + item2 << std::endl;
+}
+
+void q_1_22(){
+    Sales_item sum_item;
+    std::cin >> sum_item;
+    std::cout << sum_item << std::endl;
+    for (Sales_item item; std::cin >> item; std::cout << item << std::endl){
+        sum_item += item;
+    }
+    std::cout << "Sum of sale items: " << sum_item << std::endl;
+}
+
+void q_1_23(){
+    Sales_item total;
+    if (std::cin >> total){
+        Sales_item item;
+        while (std::cin >> item){
+            if (total.isbn() == item.isbn()){
+                total += item;
+            }
+            else{
+                std::cout << total << std::endl;
+                total = item;
+            }
+        }
+        std::cout << total << std::endl;
+    }
+    else{
+        std::cerr << "No data?" << std::endl;  // 写到cerr的数据是不缓冲的。Cerr通常用于输出错误信息与其他不属于正常逻辑的输出内容。
+        return;
+    }
+}
+
+int main(){
+    std::cout << /* "*/" /* "/*" */;
+    return 0;
+}
