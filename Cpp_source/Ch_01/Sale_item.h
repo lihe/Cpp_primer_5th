@@ -34,9 +34,9 @@
  * until they have read those chapters.
 */
 
-#ifndef SALESITEM_H
+#ifndef CPP_PRIMER_5TH_SALESITEM_H
 // we're here only if SALESITEM_H has not yet been defined
-#define SALESITEM_H
+#define CPP_PRIMER_5TH_SALESITEM_H
 
 // Definition of Sales_item class and related functions goes here
 #include <iostream>
