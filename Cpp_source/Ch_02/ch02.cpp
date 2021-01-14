@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Sales_data.h"
+#include "Sale_data.h"
 
 void q_2_3(){
     unsigned u = 10, u2 = 42;
@@ -17,7 +17,7 @@ void q_2_3(){
 
 int q_1_5_1()
 {
-    Sales_data book;
+    Sale_data book;
     double price;
     std::cin >> book.bookNo >> book.units_sold >> price;
     book.revenue = book.units_sold * price;
@@ -27,7 +27,7 @@ int q_1_5_1()
 }
 
 int q_1_5_2(){
-    Sales_data data1, data2;
+    Sale_data data1, data2;
     double price = 0;
     std::cin >> data1.bookNo >> data1.units_sold >> price;
     data1.revenue = data1.units_sold * price;
@@ -54,10 +54,10 @@ int q_1_5_2(){
 }
 
 int q_1_6(){
-    Sales_data total;
+    Sale_data total;
     double totalPrice = 0;
     if (std::cin >> total.bookNo >> total.units_sold >> totalPrice){
-        Sales_data trans;
+        Sale_data trans;
         double transPrice;
         while (std::cin >> trans.bookNo >> trans.units_sold >> transPrice){
             trans.revenue = trans.units_sold * transPrice;
