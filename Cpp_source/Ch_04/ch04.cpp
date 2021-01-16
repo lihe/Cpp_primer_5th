@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstdlib>
 using namespace std;
 
 int q_4_28(){
@@ -20,10 +19,9 @@ int q_4_28(){
     cout << "long double:\t" << sizeof(long double) << " bytes" << endl << endl;
 
     return 0;
-
-    int *p1 = NULL;
 }
 
 int main(){
     q_4_28();
 }
+
