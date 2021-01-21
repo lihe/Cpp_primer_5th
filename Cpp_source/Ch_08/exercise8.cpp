@@ -2,6 +2,10 @@
 // Created by Leslie on 2021/1/21.
 //
 
+//
+// Created by Leslie on 2021/1/21.
+//
+
 #include <iostream>
 #include <fstream>
 #include "Sales_data.h"
@@ -18,7 +22,7 @@ int main(int argc, char *argv[]){
         cerr << "" << endl;
         return -1;
     }
-    ofstream out(argv[2]);
+    ofstream out(argv[2], ofstream::app);
     if (!out){
         cerr << "" << endl;
         return -1;
