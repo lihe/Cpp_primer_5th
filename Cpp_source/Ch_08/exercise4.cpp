@@ -5,9 +5,9 @@
 using namespace std;
 
 int main(){
-    ifstream in("data");
+    ifstream in("../data");
     if (!in){
-        cerr << "" << endl;
+        cerr << "无法打开输入文件" << endl;
         return -1;
     }
 
