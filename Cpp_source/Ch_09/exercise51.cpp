@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-    string dates[] = {"Jan 1,2014", "February 1,2014", "3/1/2014"};
+    string dates[] = {"Jan 1,2014", "February 29,2014", "3/1/2014", "3 1 2014"};
     try{
         for (const auto &ds : dates){
             date d1(ds);
