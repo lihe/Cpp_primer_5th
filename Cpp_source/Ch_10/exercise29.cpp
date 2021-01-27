@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char *argv[]){
     ifstream in("../" + string(argv[1]));
     if (!in){
-        cout << "" << endl;
+        cout << "打开文件失败！" << endl;
         return -1;
     }
 
