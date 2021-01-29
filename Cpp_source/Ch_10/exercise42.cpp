@@ -3,10 +3,7 @@
 //
 
 #include <iostream>
-#include <vector>
-#include <algorithm>
 #include <iterator>
-#include "Sales_item.h"
 #include <list>
 #include <fstream>
 
