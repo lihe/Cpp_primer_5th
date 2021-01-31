@@ -11,7 +11,7 @@
 
 using namespace std;
 
-string &trans(string &s){
+string &trans(string &s){      // 将标点都去掉，将大写转换为小写
     for (auto i = 0; i < s.size(); i++){
         if (s[i] >= 'A' && s[i] <= 'Z'){
             s[i] -= ('A' - 'a');
