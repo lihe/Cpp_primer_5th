@@ -1,7 +1,8 @@
 #include <iostream>
+
 using namespace std;
 
-int q_4_28(){
+int main(int argc, char *argv[]){
     cout << "bool:\t\t" << sizeof(bool) << " bytes" << endl << endl;
 
     cout << "char:\t\t" << sizeof(char) << " bytes" << endl;
@@ -19,8 +20,4 @@ int q_4_28(){
     cout << "long double:\t" << sizeof(long double) << " bytes" << endl << endl;
 
     return 0;
-}
-
-int main(){
-    q_4_28();
 }
