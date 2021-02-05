@@ -20,8 +20,9 @@ public:
     // 构造函数的三种形式
     Sales_data() = default;
     Sales_data(const string &book) : bookNo(book) { }
-    Sales_data(const string &s, unsigned n, double p) : bookNo(s), units_sold(n), revenue(p * n) { }
-    Sales_data(istream &is) { }
+    Sales_data(const string &book, const unsigned num, const double sellp, const double salep);
+    Sales_data(std::istream &is) { is >> *this; }
+
 
     Sales_data& operator += (const Sales_data&);
     string isbn() const {return bookNo;}
@@ -37,9 +38,16 @@ private:
     double revenue = 0.0;            // 利润
 };
 
-Sales_data::Sales_data(std::istream &is){
-    read(is, *this);
+Sales_data::Sales_data(const string &book, const unsigned num, const double sellp, const double salep){
+    bookNo = book;
+    units_sold = num;
+    sellingprice = sellp;
+    saleprice = salep;
+    if (sellingprice != 0){
+        discount = saleprice / sellingprice;
+    }
 }
+
 
 inline bool compareIsbn(const Sales_data &lhs, const Sales_data &rhs){
     return lhs.isbn() == rhs.isbn();
