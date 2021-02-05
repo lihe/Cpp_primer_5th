@@ -12,6 +12,9 @@ class Sales_data{
     friend istream& operator >> (istream&, Sales_data&);
     friend ostream& operator << (ostream&, const Sales_data&);
     friend bool operator == (const Sales_data&, const Sales_data&);
+    friend Sales_data add(const Sales_data &, const Sales_data &);
+    friend std::istream &read(std::istream &, Sales_data &);
+    friend std::ostream &print(std::ostream &, const Sales_data &);
 
 public:
     // 构造函数的三种形式
@@ -29,12 +32,15 @@ public:
         }
         return *this;
     }
+    double avg_price() const;
+    
 private:
     string bookNo;                   // 书籍编号，隐式初始化串为空
     unsigned units_sold = 0;         // 销售量
     double sellingprice = 0.0;       // 原始价格
     double saleprice = 0.0;          // 销售价格
     double discount = 0.0;           // 折扣
+    double revenue = 0.0;            // 利润
 };
 
 inline bool compareIsbn(const Sales_data &lhs, const Sales_data &rhs){
@@ -81,5 +87,22 @@ ostream& operator << (ostream& out, const Sales_data &s){
     out << s.isbn() << " " << s.units_sold << " " << s.sellingprice << " " << s.saleprice << " " << s.discount;
     return out;
 }
+
+Sales_data add(const Sales_data &lhs, const Sales_data &rhs){
+    Sales_data sum = lhs;
+    sum.combine(rhs);
+    return sum;
+}
+
+std::istream &read(std::istream &is, Sales_data &item){
+    is >> item.bookNo >> item.units_sold >> item.sellingprice >> item.saleprice;
+    return is;
+}
+
+std::ostream &print(std::ostream &os, const Sales_data &item){
+    os << item.isbn() << " " << item.units_sold << " " << item.sellingprice << " " << item.saleprice << " " << item.discount;
+    return os;
+}
+
 
 #endif //CPP_PRIMER_5TH_SALES_DATA_H
