@@ -1,18 +1,27 @@
 #include <iostream>
-#include "Sales_data.h"
+#include "Sales_item.h"
+
 using namespace std;
 
-int main(){
-    Sales_data item1, item2;
-    if (read(cin, item1) && read(cin, item1)){
-        if (item1.isbn() == item2.isbn()){
-            item1.combine(item2);
-            print(cout, item1);
-            cout << endl;
+int main(int argc, char *argv[]){
+    cout << "请输入交易记录（ISBN、销售量、原价、实际售价）：" << endl;
+    Sales_item total;
+    if (cin >> total) {
+        Sales_item trans;
+        while (cin >> trans) {
+            if (total.isbn() == trans.isbn()) {
+                total += trans;
+            }
+            else{
+                cout << total << endl;
+                total = trans;
+            }
         }
+        cout << "No data?" << endl;
     }
     else{
-        cerr << "Input failed!" << endl;
+        cerr << "No data?" << endl;
+        return -1;
     }
     return 0;
 }
