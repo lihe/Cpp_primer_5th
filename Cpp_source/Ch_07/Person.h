@@ -9,13 +9,13 @@
 using namespace std;
 
 class Person{
-    friend std::istream &read(std::istream &, Person &);
-    friend std::ostream &print(std::ostream &, Person &);
+    friend std:: istream &read(std::istream &, Person &);
+    friend std:: ostream &print(std::ostream &, Person &);
 
-private:
-    string strName;  // 姓名
+private: 
+    string strName;     // 姓名
     string strAddress;  // 地址
-public:
+public: 
     string getName() const { return strName; }
     string getAddress() const { return strAddress; }
 };

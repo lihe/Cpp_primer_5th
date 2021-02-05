@@ -20,18 +20,12 @@ public:
     // 构造函数的三种形式
     Sales_data() = default;
     Sales_data(const string &book) : bookNo(book) { }
-    Sales_data(istream &is) {is >> *this;}
+    Sales_data(const string &s, unsigned n, double p) : bookNo(s), units_sold(n), revenue(p * n) { }
+    Sales_data(istream &is) { }
 
     Sales_data& operator += (const Sales_data&);
     string isbn() const {return bookNo;}
-    Sales_data &combine(const Sales_data &rhs){
-        units_sold += rhs.units_sold;
-        saleprice = (rhs.saleprice * rhs.units_sold + saleprice * units_sold) / (rhs.units_sold + units_sold);
-        if (sellingprice != 0){
-            discount = saleprice / sellingprice;
-        }
-        return *this;
-    }
+    Sales_data &combine(const Sales_data &);
     double avg_price() const;
     
 private:
@@ -42,6 +36,10 @@ private:
     double discount = 0.0;           // 折扣
     double revenue = 0.0;            // 利润
 };
+
+Sales_data::Sales_data(std::istream &is){
+    read(is, *this);
+}
 
 inline bool compareIsbn(const Sales_data &lhs, const Sales_data &rhs){
     return lhs.isbn() == rhs.isbn();
@@ -56,6 +54,15 @@ inline bool operator == (const Sales_data &lhs, const Sales_data &rhs){
 
 inline bool operator != (const Sales_data &lhs, const Sales_data &rhs){
     return !(lhs == rhs);
+}
+
+Sales_data& Sales_data::combine(const Sales_data &rhs){
+    units_sold += rhs.units_sold;
+    saleprice = (rhs.saleprice * rhs.units_sold + saleprice * units_sold) / (rhs.units_sold + units_sold);
+    if (sellingprice != 0){
+        discount = saleprice / sellingprice;
+    }
+    return *this;
 }
 
 Sales_data& Sales_data::operator += (const Sales_data &rhs) {
