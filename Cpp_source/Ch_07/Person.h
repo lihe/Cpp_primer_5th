@@ -27,6 +27,11 @@ public:
     string getAddress() const { return strAddress; }
 };
 
+std:: istream &read(std::istream &, Person &);
+std:: ostream &print(std::ostream &, Person &);
+std:: istream operator >> (std::istream &, Person &);
+
+
 std::istream &read(std::istream &is, Person &per){
     is >> per.strName >> per.strAddress;
     return is;

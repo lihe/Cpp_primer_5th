@@ -27,10 +27,10 @@ public:
     Sales_data& operator += (const Sales_data&);
     string isbn() const {return bookNo;}
     Sales_data &combine(const Sales_data &);
+    double avg_price() const;
     
 private:
-    double avg_price() const;
-    string bookNo;                   // 书籍编号，隐式初始化串为空
+    string bookNo;                   // 书籍编号，隐式初始化S串为空
     unsigned units_sold = 0;         // 销售量
     double sellingprice = 0.0;       // 原始价格
     double saleprice = 0.0;          // 销售价格
@@ -48,6 +48,14 @@ Sales_data::Sales_data(const string &book, const unsigned num, const double sell
     }
 }
 
+inline
+double Sales_data:: avg_price() const{
+    if (units_sold){
+        return revenue / units_sold;
+    }
+    else
+        return 0;
+}
 
 inline bool compareIsbn(const Sales_data &lhs, const Sales_data &rhs){
     return lhs.isbn() == rhs.isbn();
