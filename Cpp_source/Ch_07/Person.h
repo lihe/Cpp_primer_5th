@@ -22,7 +22,8 @@ public:
         strName = name;
         strAddress = address;
     }
-    Person(std::istream &is) { is >> *this; }
+    explicit Person(std::istream &is) { is >> *this; }
+    
     string getName() const { return strName; }
     string getAddress() const { return strAddress; }
 };
