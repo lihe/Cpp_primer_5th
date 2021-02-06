@@ -9,6 +9,7 @@
 using namespace std;
 
 class Screen{
+    friend class Window_mgr;
 private:
     unsigned height = 0, width = 0;
     unsigned cursor = 0;
