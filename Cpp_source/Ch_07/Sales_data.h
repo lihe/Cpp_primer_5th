@@ -27,9 +27,9 @@ public:
     Sales_data& operator += (const Sales_data&);
     string isbn() const {return bookNo;}
     Sales_data &combine(const Sales_data &);
-    double avg_price() const;
     
 private:
+    double avg_price() const;
     string bookNo;                   // 书籍编号，隐式初始化串为空
     unsigned units_sold = 0;         // 销售量
     double sellingprice = 0.0;       // 原始价格
