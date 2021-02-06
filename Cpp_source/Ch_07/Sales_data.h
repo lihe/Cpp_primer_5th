@@ -38,6 +38,14 @@ private:
     double revenue = 0.0;            // 利润
 };
 
+// 声明
+istream& operator >> (istream&, Sales_data&);
+ostream& operator << (ostream&, const Sales_data&);
+bool operator == (const Sales_data&, const Sales_data&);
+Sales_data add(const Sales_data &, const Sales_data &);
+std::istream &read(std::istream &, Sales_data &);
+std::ostream &print(std::ostream &, const Sales_data &);
+
 Sales_data::Sales_data(const string &book, const unsigned num, const double sellp, const double salep){
     bookNo = book;
     units_sold = num;
