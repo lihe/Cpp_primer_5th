@@ -22,6 +22,7 @@ public:
     typedef vector<string>::size_type size_type;
     StrBlob();
     StrBlob(initializer_list<string> i1);
+    StrBlob(vector<string> *p);
     size_type size() const { return data->size(); }
     bool empty() const { return data->empty(); }
 
@@ -45,7 +46,9 @@ private:
 
 inline StrBlob::StrBlob() : data(make_shared<vector<string>>()){}
 
-StrBlob::StrBlob(initializer_list<string> i1) : data(make_shared<vector<string>>(i1)) {}
+inline StrBlob::StrBlob(vector<string> *p) : data(p) {}
+
+inline StrBlob::StrBlob(initializer_list<string> i1) : data(make_shared<vector<string>>(i1)) {}
 
 inline void StrBlob::check(size_type i, const string &msg) const {
     if (i >= data->size())
@@ -84,7 +87,8 @@ public:
     StrBlobPtr() : curr(0) {}
     explicit StrBlobPtr(StrBlob &a, size_t sz = 0) : wptr(a.data), curr(sz) {}
     explicit StrBlobPtr(const StrBlob &a, size_t sz = 0) : wptr(a.data), curr(sz) {}
-    string& deref() const;
+    string &deref(int off) const;
+    string &deref() const;
     StrBlobPtr& incr();
     StrBlobPtr& decr();
 
@@ -113,9 +117,14 @@ inline shared_ptr<vector<string>> StrBlobPtr::check(size_t i, const string &msg)
     return ret;
 }
 
-inline string& StrBlobPtr::deref() const{
+inline string & StrBlobPtr::deref() const{
     auto p = check(curr, "dereference past end");
     return (*p)[curr];
+}
+
+inline string & StrBlobPtr::deref(int off) const{
+    auto p = check(curr, "dereference past end");
+    return (*p)[curr + off];
 }
 
 inline StrBlobPtr& StrBlobPtr::incr() {
