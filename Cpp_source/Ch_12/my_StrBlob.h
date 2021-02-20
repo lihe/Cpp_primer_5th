@@ -35,6 +35,9 @@ public:
     StrBlobPtr begin();
     StrBlobPtr end();
 
+    StrBlobPtr begin() const;
+    StrBlobPtr end() const;
+
 private:
     shared_ptr<vector<string>> data;
     void check(size_type i, const string &msg) const;
@@ -80,15 +83,26 @@ class StrBlobPtr{
 public:
     StrBlobPtr() : curr(0) {}
     explicit StrBlobPtr(StrBlob &a, size_t sz = 0) : wptr(a.data), curr(sz) {}
+    explicit StrBlobPtr(const StrBlob &a, size_t sz = 0) : wptr(a.data), curr(sz) {}
     string& deref() const;
     StrBlobPtr& incr();
     StrBlobPtr& decr();
+
 
 private:
     shared_ptr<vector<string>> check(size_t, const string&) const;
     weak_ptr<vector<string>> wptr;
     size_t curr;
 };
+
+inline StrBlobPtr StrBlob::begin() const {
+    return StrBlobPtr(*this);
+}
+
+inline StrBlobPtr StrBlob::end() const {
+    auto ret = StrBlobPtr(*this, data->size());
+    return ret;
+}
 
 inline shared_ptr<vector<string>> StrBlobPtr::check(size_t i, const string &msg) const {
     auto ret = wptr.lock();
