@@ -1,0 +1,4 @@
+```c++
+~HasPtr() { delete ps; }
+```
+
