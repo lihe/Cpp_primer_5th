@@ -28,4 +28,6 @@
 
 ### [第十二章：动态内存](https://github.com/lihe/Cpp_primer_5th/tree/master/Cpp_source/Ch_12)
 
+### [第十三章：拷贝控制](https://github.com/lihe/Cpp_primer_5th/tree/master/Cpp_source/Ch_13)
+
 持续更新ing
