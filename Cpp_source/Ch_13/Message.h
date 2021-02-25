@@ -13,8 +13,8 @@
 using namespace std;
 
 class Message {
-    friend void swap(Message &, Message &);
     friend class Folder;
+    friend void swap(Message &, Message &);
 
 public:
     explicit Message(const string &str = "") : contents(str) {}
