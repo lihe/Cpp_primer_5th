@@ -14,16 +14,15 @@
 using namespace std;
 
 class String {
-    
-friend String operator + (const String &, const String &);
-friend String add(const String &, const String &);
-friend ostream& operator << (ostream &, const String &);
-friend ostream& print(ostream &, const String &);
+
+    friend String operator + (const String &, const String &);
+    friend String add(const String &, const String &);
+    friend ostream& operator << (ostream &, const String &);
+    friend ostream& print(ostream &, const String &);
 
 public:
-    String() = default;
     String() : sz(0), p(nullptr) {}
-    explicit String(const char *cp) : sz(strlen(cp)), p(a.allocate(sz)) {
+    String(const char *cp) : sz(strlen(cp)), p(a.allocate(sz)) {
         uninitialized_copy(cp, cp + sz, p);
     }
     String(const String &s) : sz(s.sz), p(a.allocate(s.sz)) {
@@ -54,6 +53,8 @@ public:
         sz = s.sz;
         s.sz = cnt;
     }
+
+    ~String() noexcept { if(p) a.deallocate(p, sz); }
 private:
     size_t sz;
     char *p;
