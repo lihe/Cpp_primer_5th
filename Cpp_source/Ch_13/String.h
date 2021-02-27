@@ -29,9 +29,13 @@ public:
         uninitialized_copy(s.p, s.p + sz, p);
     }
 
+    String(String &&s) noexcept : sz(s.size()), p(s.p) { s.p = 0; s.sz = 0; }
+
     String(size_t n, char c) : sz(n), p(a.allocate(n)) {
         uninitialized_fill_n(p, sz, c);
     }
+
+    String& operator = (String &&) noexcept;
 
     String& operator=(const String &);
     String& operator=(const char *);
@@ -66,6 +70,17 @@ inline void swap(String &s1, String &s2) {
 }
 
 allocator<char> String::a;
+
+
+String& String::operator=(String &&rhs) noexcept {
+    // 检查显式自赋值
+    if (p)
+        a.deallocate(p, sz);
+    p = rhs.p;
+    sz = rhs.sz;
+    rhs.p = 0;
+    rhs.sz = 0;
+}
 
 String& String::operator=(const String &rhs) {
     auto newp = a.allocate(rhs.size());

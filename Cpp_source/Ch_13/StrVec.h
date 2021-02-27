@@ -9,6 +9,7 @@
 #include <string>
 #include <memory>
 #include <utility>
+#include <algorithm>
 
 using namespace std;
 
@@ -17,7 +18,9 @@ public:
     StrVec() : elements(nullptr), first_free(nullptr), cap(nullptr) {}
     StrVec(initializer_list<string>);
     StrVec(const StrVec&);
+    StrVec(StrVec &&);
     StrVec& operator=(const StrVec&);
+    StrVec& operator=(StrVec &&) noexcept;
     ~StrVec();
 
     void push_back(const string &);
@@ -40,12 +43,26 @@ private:
     string *cap;                                                        // 指向数组尾后元素的指针
 };
 
+inline StrVec::StrVec(StrVec &&s) : elements(s.elements), first_free(s.first_free), cap(s.cap) {
+    s.elements = s.first_free = s.cap = nullptr;
+}
+
 inline StrVec::StrVec(initializer_list<string> il) {
     auto newdata = alloc_n_copy(il.begin(), il.end());
     elements = newdata.first;
     first_free = cap = newdata.second;
 }
 
+inline StrVec & StrVec::operator=(StrVec &&rhs) noexcept {
+    if (this != &rhs) {
+        free();     // free existing elements
+        elements = rhs.elements;
+        first_free = rhs.first_free;
+        cap = rhs.cap;
+        rhs.elements = rhs.first_free = rhs.cap = nullptr;
+    }
+    return *this;
+}
 inline void StrVec::resize(size_t n) {
     if (n > size()) {
         while (size() < n)
@@ -76,7 +93,8 @@ inline pair<string*, string*> StrVec::alloc_n_copy(const string *b, const string
 
 inline void StrVec::free() {
     if (elements) {
-        for (auto p = first_free; p != elements; alloc.destroy(--p));      // 逆序销毁旧元素
+        // for (auto p = first_free; p != elements; alloc.destroy(--p));      // 逆序销毁旧元素
+        for_each(elements, first_free, [](string &s) { alloc.destroy(&s); });
         alloc.deallocate(elements, cap - elements);
     }
 }
