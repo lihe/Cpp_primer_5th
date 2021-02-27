@@ -18,7 +18,7 @@ public:
     StrVec() : elements(nullptr), first_free(nullptr), cap(nullptr) {}
     StrVec(initializer_list<string>);
     StrVec(const StrVec&);
-    StrVec(StrVec &&);
+    StrVec(StrVec &&) noexcept;
     StrVec& operator=(const StrVec&);
     StrVec& operator=(StrVec &&) noexcept;
     ~StrVec();
@@ -43,7 +43,7 @@ private:
     string *cap;                                                        // 指向数组尾后元素的指针
 };
 
-inline StrVec::StrVec(StrVec &&s) : elements(s.elements), first_free(s.first_free), cap(s.cap) {
+inline StrVec::StrVec(StrVec &&s) noexcept : elements(s.elements), first_free(s.first_free), cap(s.cap) {
     s.elements = s.first_free = s.cap = nullptr;
 }
 
@@ -120,19 +120,24 @@ inline  StrVec& StrVec::operator=(const StrVec &rhs) {
 inline void StrVec::reallocate() {
     // 分配两倍大小的内存空间
     auto newcapacity = size() ? 2 * size() : 1;
-    auto newdata = alloc.allocate(newcapacity);
-
-    // 将数据从旧内存移动到新内存
-    auto dest = newdata;               // 指向新数组中下一个空闲位置
-    auto elem = elements;              // 指向旧数组中下一个位置
-
-    for (size_t i = 0; i != size(); i++)
-        alloc.construct(dest++, std::move(*elem++));
-    free();                            // 一旦移动完元素就释放旧内存
-
-    // 更新数据结构
-    elements = newdata;
-    first_free = dest;
+    auto first = alloc.allocate(newcapacity);
+    // 移动元素
+    auto last =  uninitialized_copy(make_move_iterator(begin()), make_move_iterator(end()), first);
+    free();                            // 释放旧空间
+    elements = first;                  // 更新指针  
+    first_free = last;
+//
+//    // 将数据从旧内存移动到新内存
+//    auto dest = newdata;               // 指向新数组中下一个空闲位置
+//    auto elem = elements;              // 指向旧数组中下一个位置
+//
+//    for (size_t i = 0; i != size(); i++)
+//        alloc.construct(dest++, std::move(*elem++));
+//    free();                            // 一旦移动完元素就释放旧内存
+//
+//    // 更新数据结构
+//    elements = newdata;
+//    first_free = dest;
     cap = elements + newcapacity;
 }
 

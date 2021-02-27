@@ -13,14 +13,16 @@
 using namespace std;
 
 class Message {
+    friend void swap(Message &, Message &);
     friend class Folder;
-    friend void swap(Message &, Message &); 
 
 public:
     explicit Message(const string &str = "") : contents(str) {}
 
     Message(const Message &);                  // 拷贝构造函数
     Message& operator = (const Message &);     // 拷贝赋值运算符
+    Message(Message &&);
+    Message& operator=(Message &&);
     ~Message();
 
     // 从给定的Folder中添加\删除Message
@@ -35,7 +37,38 @@ private:
     // 将本Message添加到指向参数的Folder中
     void add_to_Folders(const Message &);
     void remove_from_Folders();
+
+    //
+    void move_Folders(Message *);
+
+    void addFldr(Folder *f) { folders.insert(f); }
+    void remFldr(Folder *f) { folders.erase(f); }
 };
+
+inline
+Message& Message::operator=(Message &&rhs) {
+    if (this != rhs) {                           // 检查自赋值情况
+        remove_from_Folders();
+        contents = std::move(rhs.contents);      // 移动赋值运算符
+        move_Folders(&rhs);
+    }
+    return *this;
+}
+
+inline
+Message::Message(Message &&m) : contents(std::move(m.contents)) {
+    move_Folders(&m);      // 移动folders并更新Folder指针
+}
+
+inline
+void Message::move_Folders(Message *m) {
+    folders = std::move(m->folders);  // 使用set的移动赋值运算符
+    for (auto f : folders){           // 对每个Folder
+        f->remMsg(m);                 // 从Folder中删除旧Message
+        f->addMsg(this);              // 将本Message添加到Folder中
+    }
+    m->folders.clear();
+}
 
 inline
 void Message::save(Folder &f) {
@@ -43,24 +76,24 @@ void Message::save(Folder &f) {
     f.addMsg(this);
 }
 
-inline 
+inline
 void Message::remove(Folder &f) {
     folders.erase(&f);
     f.remMsg(this);
 }
 
-inline 
+inline
 void Message::add_to_Folders(const Message &m) {
     for (auto f : m.folders)
         f->addMsg(this);   // 对每个包含m的Folder向该Folder添加一个指向本Message的指针
 }
 
-inline 
+inline
 Message::Message(const Message &m) : contents(m.contents), folders(m.folders) {
     add_to_Folders(m);         // 将本消息添加到指向m的folder中
 }
 
-inline 
+inline
 void Message::remove_from_Folders() {
     for (auto f : folders)
         f->remMsg(this);

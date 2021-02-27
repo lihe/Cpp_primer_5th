@@ -45,6 +45,8 @@ public:
     StrBlobPtr begin() const;
     StrBlobPtr end() const;
 
+    void push_back(string &&t) { data->push_back(std::move(t)); }
+
 private:
     shared_ptr<vector<string>> data;
     void check(size_type i, const string &msg) const;

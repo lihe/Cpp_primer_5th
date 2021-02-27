@@ -15,6 +15,7 @@ public:
     HasPtr(const string &s = string()) : ps(new string(s)), i(0) {}
     HasPtr(const HasPtr &p) : ps(new string(*p.ps)), i(p.i) {}
     HasPtr& operator = (const HasPtr &);
+    HasPtr& operator = (HasPtr &&) noexcept;
     HasPtr& operator = (const string &);
     string& operator * () const;
     bool operator < (const HasPtr &) const;
@@ -24,6 +25,18 @@ private:
     string *ps;
     int i;
 };
+
+inline
+HasPtr& HasPtr::operator=(HasPtr &&rhs) noexcept {
+    cout << "Move Assignment" << endl;
+    if (this != &rhs) {
+        delete ps;
+        ps = rhs.ps;
+        rhs.ps = nullptr;
+        rhs.i = 0;
+    }
+    return *this;
+}
 
 bool HasPtr::operator<(const HasPtr &rhs) const {
     return *ps < *rhs.ps;
