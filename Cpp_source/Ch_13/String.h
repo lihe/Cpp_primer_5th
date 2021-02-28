@@ -80,6 +80,8 @@ String& String::operator=(String &&rhs) noexcept {
     sz = rhs.sz;
     rhs.p = 0;
     rhs.sz = 0;
+
+    return *this;
 }
 
 String& String::operator=(const String &rhs) {
