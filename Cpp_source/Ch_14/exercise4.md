@@ -1,19 +1,15 @@
-```c++
-class date{
-public:
-    friend ostream& operator << (ostream&, const date&);
+（a）%通常定义为非成员。
 
-    date() {};
-    date(int y, int m, int d) : year(y), month(m), day(d) {}
+（b）%=通常定义为类成员，因为它会改变对象的状态。
 
-private:
-    int year, month, day;
-};
+（c）++通常定义为类成员，因为它会改变对象的状态。
 
-ostream& operator << (ostream &os, const data &d) {
-    const char sep = '\t';
-    os << "year: " << d.year << sep << "month: " << d.month << sep << "day: " << d.day << endl;
-    return os;
-}
-```
+（d）->必须定义为类成员，否则编译会报错。
 
+（e）<<通常定义为非成员。
+
+（f） &&通常定义为非成员。
+
+（g）==通常定义为非成员。
+
+（h）（）必须定义为类成员，否则编译会报错。
